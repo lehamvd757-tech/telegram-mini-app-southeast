@@ -11,10 +11,109 @@
   </head>
   <body>
     <main class="screen">
-      <section class="card" aria-labelledby="title">
-        <h1 id="title">Оставить заявку</h1>
-        <p>Заполните анкету, и продавец свяжется с вами</p>
-        <button class="start-button" type="button">Начать</button>
+      <section class="view start-view" data-view="start" aria-labelledby="start-title">
+        <div class="card intro-card">
+          <p class="eyebrow">Southeast</p>
+          <h1 id="start-title">Оставить заявку</h1>
+          <p class="lead">Ответьте на несколько вопросов. Продавец свяжется с вами для уточнения деталей.</p>
+          <button class="button button-primary" id="start-button" type="button">Начать</button>
+        </div>
+      </section>
+
+      <section class="view" data-view="form" aria-labelledby="form-title" hidden>
+        <div class="form-shell">
+          <header class="page-header">
+            <p class="eyebrow">Шаг 1 из 2</p>
+            <h1 id="form-title">Расскажите о себе</h1>
+            <p>Заполните только то, что уже знаете. Поля со звёздочкой обязательны.</p>
+          </header>
+
+          <form id="lead-form" novalidate>
+            <div class="field-grid">
+              <div class="field">
+                <label for="name">Имя <span aria-hidden="true">*</span></label>
+                <input id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-error" />
+                <p class="field-error" id="name-error" aria-live="polite"></p>
+              </div>
+
+              <div class="field">
+                <label for="phone">Телефон <span aria-hidden="true">*</span></label>
+                <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 999 123-45-67" required aria-describedby="phone-error" />
+                <p class="field-error" id="phone-error" aria-live="polite"></p>
+              </div>
+
+              <div class="field">
+                <label for="interest">Что вас интересует <span aria-hidden="true">*</span></label>
+                <select id="interest" name="interest" required aria-describedby="interest-error">
+                  <option value="">Выберите вариант</option>
+                  <option value="Товар / продукция">Товар / продукция</option>
+                  <option value="Стоимость">Стоимость</option>
+                  <option value="Оптовая закупка">Оптовая закупка</option>
+                  <option value="Сотрудничество">Сотрудничество</option>
+                  <option value="Другое">Другое</option>
+                </select>
+                <p class="field-error" id="interest-error" aria-live="polite"></p>
+              </div>
+
+              <div class="field">
+                <label for="preferred-contact">Удобный способ связи <span aria-hidden="true">*</span></label>
+                <select id="preferred-contact" name="preferredContact" required aria-describedby="preferred-contact-error">
+                  <option value="">Выберите вариант</option>
+                  <option value="Telegram">Telegram</option>
+                  <option value="Телефон">Телефон</option>
+                  <option value="WhatsApp">WhatsApp</option>
+                  <option value="Не имеет значения">Не имеет значения</option>
+                </select>
+                <p class="field-error" id="preferred-contact-error" aria-live="polite"></p>
+              </div>
+
+              <div class="field">
+                <label for="company">Компания / ИП <span class="optional">необязательно</span></label>
+                <input id="company" name="company" type="text" autocomplete="organization" />
+              </div>
+
+              <div class="field">
+                <label for="city">Город <span class="optional">необязательно</span></label>
+                <input id="city" name="city" type="text" autocomplete="address-level2" />
+              </div>
+
+              <div class="field">
+                <label for="quantity">Количество / объём <span class="optional">необязательно</span></label>
+                <input id="quantity" name="quantity" type="text" inputmode="text" />
+              </div>
+
+              <div class="field field-full">
+                <label for="comment">Комментарий <span class="optional">необязательно</span></label>
+                <textarea id="comment" name="comment" rows="4"></textarea>
+              </div>
+            </div>
+            <button class="button button-primary" type="submit">Проверить данные</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="view" data-view="review" aria-labelledby="review-title" hidden>
+        <div class="form-shell">
+          <header class="page-header">
+            <p class="eyebrow">Шаг 2 из 2</p>
+            <h1 id="review-title">Проверьте данные</h1>
+            <p>Убедитесь, что всё указано верно перед формированием заявки.</p>
+          </header>
+          <dl class="summary" id="lead-summary"></dl>
+          <div class="button-stack">
+            <button class="button button-secondary" id="edit-button" type="button">Изменить</button>
+            <button class="button button-primary" id="send-button" type="button">Отправить заявку</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" data-view="success" aria-labelledby="success-title" hidden>
+        <div class="card success-card">
+          <div class="success-icon" aria-hidden="true">✓</div>
+          <h1 id="success-title">Заявка сформирована</h1>
+          <p class="lead">Данные сохранены для отправки. На следующем этапе подключим передачу заявки продавцу.</p>
+          <button class="button button-primary" id="close-button" type="button">Закрыть</button>
+        </div>
       </section>
     </main>
   </body>
