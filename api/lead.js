@@ -157,7 +157,7 @@ async function handler(request, response) {
     return sendJson(response, 413, { ok: false, code: "PAYLOAD_TOO_LARGE", message: "Заявка слишком большая." });
   }
 
-  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  const botToken = process.env.TELEGRAM_BOT_TOKEN?.trim();
   const sellerChatId = process.env.SELLER_CHAT_ID;
   if (!botToken || !sellerChatId) {
     return sendJson(response, 500, { ok: false, code: "SERVER_CONFIGURATION_ERROR", message: "Сервис временно недоступен. Попробуйте позже." });
