@@ -134,7 +134,18 @@ input:focus, select:focus, textarea:focus {
 
 .button:active { opacity: .82; }
 
+.button:disabled { cursor: wait; opacity: .62; }
+
 .button-stack { display: grid; gap: 12px; margin-top: 26px; }
+
+.delivery-error {
+  margin: 14px 0 0;
+  color: var(--tg-theme-destructive-text-color, #d14343);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.delivery-error:empty { display: none; }
 
 .summary {
   display: grid;

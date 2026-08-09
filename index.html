@@ -104,14 +104,15 @@
             <button class="button button-secondary" id="edit-button" type="button">Изменить</button>
             <button class="button button-primary" id="send-button" type="button">Отправить заявку</button>
           </div>
+          <p class="delivery-error" id="delivery-error" role="alert" aria-live="polite"></p>
         </div>
       </section>
 
       <section class="view" data-view="success" aria-labelledby="success-title" hidden>
         <div class="card success-card">
           <div class="success-icon" aria-hidden="true">✓</div>
-          <h1 id="success-title">Заявка сформирована</h1>
-          <p class="lead">Данные сохранены для отправки. На следующем этапе подключим передачу заявки продавцу.</p>
+          <h1 id="success-title">Заявка отправлена</h1>
+          <p class="lead" id="success-message"></p>
           <button class="button button-primary" id="close-button" type="button">Закрыть</button>
         </div>
       </section>

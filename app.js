@@ -3,7 +3,10 @@
   const form = document.querySelector("#lead-form");
   const views = document.querySelectorAll("[data-view]");
   const summary = document.querySelector("#lead-summary");
-  const state = { lead: null };
+  const sendButton = document.querySelector("#send-button");
+  const deliveryError = document.querySelector("#delivery-error");
+  const successMessage = document.querySelector("#success-message");
+  const state = { lead: null, sending: false };
 
   if (tg) {
     tg.ready();
@@ -99,6 +102,37 @@
     });
   }
 
+  function setDeliveryError(message) {
+    deliveryError.textContent = message;
+  }
+
+  function payloadForDelivery() {
+    return {
+      initData: tg?.initData || "",
+      lead: {
+        createdAt: state.lead.createdAt,
+        source: state.lead.source,
+        customer: state.lead.customer
+      }
+    };
+  }
+
+  function deliveryMessageFor(error, status) {
+    if (error?.code === "TELEGRAM_AUTH_REQUIRED") {
+      return "Откройте приложение через Telegram и повторите отправку.";
+    }
+    if (error?.code === "TELEGRAM_AUTH_EXPIRED") {
+      return "Сессия Telegram устарела. Откройте приложение заново и повторите отправку.";
+    }
+    if (status === 400) {
+      return "Проверьте данные заявки и попробуйте ещё раз.";
+    }
+    if (status === 405 || status === 429 || status >= 500) {
+      return "Не удалось отправить заявку. Проверьте соединение и попробуйте ещё раз.";
+    }
+    return "Не удалось отправить заявку. Проверьте соединение и попробуйте ещё раз.";
+  }
+
   document.querySelector("#start-button").addEventListener("click", () => showView("form"));
 
   form.addEventListener("submit", (event) => {
@@ -112,6 +146,7 @@
 
     state.lead = createLead(values);
     renderSummary(state.lead);
+    setDeliveryError("");
     showView("review");
   });
 
@@ -127,8 +162,43 @@
     }
   });
 
-  document.querySelector("#edit-button").addEventListener("click", () => showView("form"));
-  document.querySelector("#send-button").addEventListener("click", () => showView("success"));
+  document.querySelector("#edit-button").addEventListener("click", () => {
+    setDeliveryError("");
+    showView("form");
+  });
+
+  sendButton.addEventListener("click", async () => {
+    if (state.sending || !state.lead) {
+      return;
+    }
+
+    state.sending = true;
+    sendButton.disabled = true;
+    sendButton.textContent = "Отправляем…";
+    setDeliveryError("");
+
+    try {
+      const response = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payloadForDelivery())
+      });
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok || !result?.ok || !result.leadId) {
+        throw { result, status: response.status };
+      }
+
+      successMessage.textContent = `Заявка № ${result.leadId} передана продавцу. С вами свяжутся для уточнения деталей.`;
+      showView("success");
+    } catch (error) {
+      setDeliveryError(deliveryMessageFor(error?.result, error?.status));
+      sendButton.textContent = "Повторить отправку";
+    } finally {
+      state.sending = false;
+      sendButton.disabled = false;
+    }
+  });
   document.querySelector("#close-button").addEventListener("click", () => {
     if (tg?.close) {
       tg.close();
