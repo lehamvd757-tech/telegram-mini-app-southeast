@@ -25,6 +25,9 @@ button, input, select, textarea { font: inherit; }
   padding: max(24px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
 }
 
+/* Keep inactive screens out of layout even when a view has display styles. */
+.view[hidden] { display: none !important; }
+
 .start-view, [data-view="success"] {
   display: grid;
   place-items: center;
