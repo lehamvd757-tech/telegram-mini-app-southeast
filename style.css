@@ -33,6 +33,39 @@ button, input, select, textarea { font: inherit; }
   place-items: center;
 }
 
+.start-view {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(5, 9, 19, .34), rgba(5, 8, 16, .76)),
+    url("assets/china-megacity-hero-v1.png") center / cover no-repeat;
+}
+
+.start-view::before,
+.start-view::after {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+}
+
+.start-view::before {
+  inset: 16px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 28px;
+}
+
+.start-view::after {
+  width: 230px;
+  height: 230px;
+  right: -118px;
+  top: -86px;
+  border: 1px solid rgba(164, 145, 255, .28);
+  border-radius: 50%;
+  box-shadow: 0 0 0 30px rgba(164, 145, 255, .045), 0 0 0 61px rgba(164, 145, 255, .028);
+}
+
 .card, .form-shell {
   width: min(100%, 520px);
   margin: 0 auto;
@@ -43,6 +76,95 @@ button, input, select, textarea { font: inherit; }
   border: 1px solid color-mix(in srgb, var(--tg-theme-hint-color, #94a3b8) 45%, transparent);
   border-radius: 20px;
   background: var(--tg-theme-secondary-bg-color, #f7f7f8);
+  text-align: center;
+}
+
+.intro-card {
+  position: relative;
+  min-height: min(520px, calc(100dvh - 80px));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px 24px 22px;
+  overflow: hidden;
+  border-color: rgba(223, 218, 255, .38);
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, .14), transparent 36%),
+    linear-gradient(145deg, rgba(9, 13, 25, .84), rgba(5, 8, 17, .73));
+  box-shadow: 0 26px 56px rgba(0, 0, 0, .36);
+  backdrop-filter: blur(7px);
+  color: #fff;
+  text-align: left;
+}
+
+.intro-card::after {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  right: -90px;
+  bottom: 82px;
+  content: "";
+  border: 1px solid rgba(164, 145, 255, .24);
+  border-radius: 50%;
+}
+
+.intro-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.intro-card .eyebrow { margin: 0; color: #c6baff; font-size: 12px; }
+
+.intro-step {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid rgba(197, 187, 255, .35);
+  border-radius: 50%;
+  color: #c7bbff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+.intro-copy { position: relative; z-index: 1; margin-top: auto; padding-top: 54px; }
+
+.intro-card h1 {
+  color: #fff;
+  font-size: clamp(37px, 11vw, 50px);
+  letter-spacing: -.055em;
+  line-height: .98;
+}
+
+.intro-card .lead {
+  max-width: 290px;
+  margin-top: 18px;
+  color: rgba(255, 255, 255, .78);
+  font-size: 16px;
+}
+
+.intro-action { position: relative; z-index: 1; margin-top: 30px; }
+
+.intro-card .button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 58px;
+  padding-inline: 20px;
+  box-shadow: 0 11px 24px rgba(135, 112, 226, .23);
+}
+
+.intro-card .button-primary { background: #8973df; color: #fff; }
+
+.intro-card .button span { font-size: 22px; font-weight: 500; line-height: 1; }
+
+.intro-action > p {
+  margin: 14px 3px 0;
+  color: rgba(255, 255, 255, .55);
+  font-size: 12px;
+  line-height: 1.45;
   text-align: center;
 }
 
